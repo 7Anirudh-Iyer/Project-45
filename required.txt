@@ -1,0 +1,109 @@
+var icons,mails,bg
+var compose,sent,trash,chat
+var logo
+var db,mail=0
+var user1=0,user2=0,user3=0
+var entered,exited
+var compa
+
+function setup(){
+  createCanvas(windowWidth,windowHeight)
+
+  db=firebase.database()
+
+  db.ref('user1').on('value',function(data){
+    user1=data.val()
+  })
+
+  db.ref('user2').on('value',function(data){
+    user2=data.val()
+  })
+
+  db.ref('user2').on('value',function(data){
+    user3=data.val()
+  })
+
+  bg=createSprite(width/2,height/2,1000,1000)
+
+  icons=createSprite(width/8,height/2,width/4,height)
+  icons.shapeColor=200
+
+  mails=createSprite(width/2+width/8,height/2,width-width/4,height)
+  mails.shapeColor='black'
+
+  compose=createButton('Compose')
+  compose.size(width/6,40)
+  compose.position(width/8-compose.width/2,height/10)
+  compose.style('border-radius','40px')
+
+  sent=createButton('Sent')
+  sent.size(width/6,40)
+  sent.position(width/8-sent.width/2,height/10*2)
+  sent.style('border-radius','40px')
+
+  trash=createButton('Trash')
+  trash.size(width/6,40)
+  trash.position(width/8-trash.width/2,height/10*3)
+  trash.style('border-radius','40px')
+
+  chat=createButton('Chat')
+  chat.size(width/6,40)
+  chat.position(width/8-chat.width/2,height/10*4)
+  chat.style('border-radius','40px')
+
+  // entered=createButton('Entered')
+  // entered.position(width/8-entered.width/2,height/10*5)
+  // entered.style('border-radius','7px')
+
+  // exited=createButton('Exited')
+  // exited.position(width/8-exited.width/2,height/10*6)
+  // exited.style('border-radius','7px')
+
+  // var I = createInput()
+  // I.position(width/2,height/2)
+  // I.size(100,200)
+  // I.style('text-align',TOP)
+
+}
+
+function draw(){
+  background(0)
+
+  compose.mousePressed(function(){
+    var comp1=createInput('Topic')
+    comp1.style('background-color','blue')
+    comp1.style('text-color','white')
+
+    var sub=createButton('Send') 
+    sub.style('background-color','blue')
+    sub.style('text-color','white')
+    comp1.size(width-sub.width*2,comp1.height)
+    
+    var comp2=createInput('Body')
+    comp2.size(width-10,20)
+    comp2.style('fill','white')
+    comp2.style('background-color','blue')
+
+    sub.mousePressed(function(){
+      mail+=1
+      y=10
+      comp1.hide()
+      comp2.hide()
+      sub.hide()
+      
+      m=createButton('Topic: '+comp1.value())
+      m.style('textAlign',LEFT)
+      m.size(width-width/4,30)
+      m.position(width/2+width/8-m.width/2,y)
+
+      y+=100
+
+      m.mousePressed(function(){
+        m2 = createElement('h3')
+        m2.html(comp2.value())
+      })
+    })
+  })
+
+  drawSprites()
+}
