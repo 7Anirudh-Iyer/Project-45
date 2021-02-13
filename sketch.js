@@ -117,11 +117,11 @@ function draw(){
         })
 }
 
-    for(var i = height/2;i < 3000; i++){
-        rectMode(CENTER)
-        fill('black')
-        rect(width/2,i,width,height)
-    }
+//     for(var i = height/2;i < 3000; i++){
+//         rectMode(CENTER)
+//         fill('black')
+//         rect(width/2,i,width,height)
+//     }
 
     drawSprites()
 }
